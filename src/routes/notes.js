@@ -7,4 +7,8 @@ router.get("/notes", (req, res) => {
   res.send("All notes");
 });
 
+router.get('/notes/add', (req, res) => {
+  res.render('notes/addnotes');
+});
+
 export default router;
