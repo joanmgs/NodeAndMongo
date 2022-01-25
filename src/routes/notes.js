@@ -11,4 +11,9 @@ router.get('/notes/add', (req, res) => {
   res.render('notes/addnotes');
 });
 
+router.post('/notes/new-note', (req, res) => {
+  console.log(req.body);
+  res.send('sended!')
+});
+
 export default router;
