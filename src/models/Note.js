@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 //This is the way how we show mongoose how my data look like
 const NoteSchema = new Schema({
     title: { type: String, required: true}, 
