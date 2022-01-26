@@ -12,8 +12,28 @@ router.get('/notes/add', (req, res) => {
 });
 
 router.post('/notes/new-note', (req, res) => {
-  console.log(req.body);
-  res.send('sended!')
+  const { title, description } = req.body;
+  const errors = [];
+  if(!title) {
+    errors.push({
+      text: 'Please, insert a title',
+    });
+  };
+  if(!description) {
+    errors.push({
+      text: 'Please, add a description',
+    });
+  };
+  if(errors.length > 0) {
+    res.render('notes/addnotes', {
+      errors,
+      title,
+      description,
+    });
+  } else {
+    res.send('sended!')
+  };
+  console.log(errors);
 });
 
 export default router;
