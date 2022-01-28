@@ -14,7 +14,7 @@ router.get("/notes", async (req, res) => {
       description: item.description,
     };
   });
-  
+  console.log(myNotes);
   res.render('notes/all-notes', { myNotes });
 });
 
