@@ -6,14 +6,24 @@ const router = express.Router();
 
 router.get("/notes", async (req, res) => {
   const notes = await Note.find();
-  res.render('notes/all-notes', { notes });
+  //It's necessary save in a different array for avoid the error: Handlebars: Access has been denied to resolve the property "title" because it is not an "own property" of its parent.
+  const myNotes = notes.map( item => {
+    return {
+      title: item.title,
+      description: item.description,
+    };
+  });
+  res.render('notes/all-notes', { myNotes });
 });
 
 router.get('/notes/add', (req, res) => {
   res.render('notes/addnotes');
 });
 
-router.post('/notes/new-note', async (req, res) => {
+//addnotes send the data filled in the form here, and then:
+// if are errors it renders addnotes again with the errors, but if not, 
+// it redirect to /notes route (top in this page) that render again notes/all-notes
+router.post('/notes/new-note', async (req, res) => { 
   const { title, description } = req.body;
   const errors = [];
 
