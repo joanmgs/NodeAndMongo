@@ -5,7 +5,8 @@ import Note from '../models/Note.js';
 const router = express.Router();
 
 router.get("/notes", async (req, res) => {
-  const notes = await Note.find();
+  //the sort command order by creation date, the first ones are the latest created.
+  const notes = await Note.find().sort({ date: 'desc'});
   //It's necessary save in a different array for avoid the error: Handlebars: Access has been denied to resolve the property "title" because it is not an "own property" of its parent.
   const myNotes = notes.map( item => {
     return {
@@ -13,6 +14,7 @@ router.get("/notes", async (req, res) => {
       description: item.description,
     };
   });
+  
   res.render('notes/all-notes', { myNotes });
 });
 
