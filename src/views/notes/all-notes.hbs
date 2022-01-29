@@ -15,9 +15,13 @@
             <p>
               {{description}}
             </p>
-            <button class="btn btn-danger btn-block btn-sm">
-              Delete
-            </button>
+            <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+              {{!-- this input creates de DELETE petition, it's hidden for the user --}}
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-danger btn-block btn-sm">
+                Delete
+              </button>
+            </form>
           </div>
         </div>
       </div>
