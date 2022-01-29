@@ -5,6 +5,7 @@ import path, { dirname } from "path";
 import { create } from 'express-handlebars';
 import methodOverride from 'method-override';
 import session from 'express-session';
+import flash from 'connect-flash';
 //Import routes
 import indexRouter from './routes/index.js';
 import notesRouter from "./routes/notes.js";
@@ -29,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 const hbs = create({
   defaultLayout: "main", //define main html page
   layoutsDir: path.join(app.get("views"), "layout"), //path where the html would be
-  partialsDir: path.join(app.get("views"), "partials"), //path where the html mixins would be
+  partialsDir: path.join(app.get("views"), "partials"), //path where the html partials would be
   extname: ".hbs", //file extensions,
 });
 // the next line sets the extension of views; it could be html, in this case hbs
@@ -50,9 +51,18 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+// next line use flash for create messages for show states, like success or error
+app.use(flash());
 
 
 //Global variables
+// this create the messages for show states with flash
+app.use( (req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next(); 
+});
+
 
 //Routes
 // show the server where the routes are

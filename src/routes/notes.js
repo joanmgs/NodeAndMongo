@@ -51,6 +51,7 @@ router.post('/notes/new-note', async (req, res) => {
   } else {// this is the condition where the new note will be saved in the DB
     const newNote = new Note({ title, description }); 
     await newNote.save(); // saved!
+    req.flash('success_msg', "Note created!! Yeiiii");
     res.redirect('/notes'); // redirected where all the data are
   };
 });
