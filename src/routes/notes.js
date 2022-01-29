@@ -72,11 +72,13 @@ router.get('/notes/edit/:id', async (req, res) => {
 router.put('/notes/edit-notes/:id', async (req, res) => {
   const { title, description } = req.body;
   await Note.findByIdAndUpdate(req.params.id, { title, description }); //search through an ID and update the data in the DB
+  req.flash('success_msg', "You made THE change buddy ;) ");
   res.redirect('/notes');
 });
 
 router.delete('/notes/delete/:id', async (req, res) => {
   await Note.findByIdAndDelete(req.params.id);
+  req.flash('success_msg', "Die note... DIEEEE!!!");
   res.redirect('/notes');
 });
 
