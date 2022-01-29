@@ -1,0 +1,30 @@
+<div class="col-md-4 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h3>Edit note</h3>
+    </div>
+    <div class="card-body">
+      <form action="/notes/edit-notes/{{myNote._id}}?_method=PUT" method="POST">
+        {{!-- this input is hidden for the user and is a middleware, it can be finded in middleware section --}}
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+          <input
+            type="text"
+            name="title"
+            placeholder="Title's Note"
+            class="form-control"
+            value="{{myNote.title}}"
+          />
+        </div>
+        <div class="form-group">
+          <textarea name="description" class="form-control">{{myNote.description}}</textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" type="submit">
+            Save!
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

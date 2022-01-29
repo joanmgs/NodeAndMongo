@@ -10,7 +10,6 @@ import indexRouter from './routes/index.js';
 import notesRouter from "./routes/notes.js";
 import usersRouter from "./routes/users.js";
 import database from "./database.js";
-console.log(database);
 
 
 //Initializations

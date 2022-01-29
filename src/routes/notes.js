@@ -10,11 +10,13 @@ router.get("/notes", async (req, res) => {
   //It's necessary save in a different array for avoid the error: Handlebars: Access has been denied to resolve the property "title" because it is not an "own property" of its parent.
   const myNotes = notes.map( item => {
     return {
+      _id: item._id,
       title: item.title,
       description: item.description,
+      date: item.date,
+      __v: item.__v,
     };
   });
-  console.log(myNotes);
   res.render('notes/all-notes', { myNotes });
 });
 
@@ -50,8 +52,25 @@ router.post('/notes/new-note', async (req, res) => {
     const newNote = new Note({ title, description }); 
     await newNote.save(); // saved!
     res.redirect('/notes'); // redirected where all the data are
-    console.log(newNote);
   };
+});
+
+router.get('/notes/edit/:id', async (req, res) => {
+  // The id is for search in the DB the note needed for being edited
+  const note = await Note.findById(req.params.id);
+  const myNote = {
+      _id: note._id,
+      title: note.title,
+      description: note.description,
+      date: note.date,
+      __v: note.__v,
+    };
+  res.render('notes/edit-notes', { myNote });
+});
+
+router.put('/notes/edit-notes/:id', async (req, res) => {
+  const { title, description } = req.body;
+  await Note.findByIdAndUpdate(req.params.id, { title, description }); //search through an ID and update the data in the DB
 });
 
 export default router;

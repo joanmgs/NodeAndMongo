@@ -27,6 +27,6 @@ export default (async () => {
         console.log("DB connected to ", db.connection.name);
         
     } catch (error) {
-        console.log(error);
+        console.log("Error in DB: ", error);
     }
 })();
