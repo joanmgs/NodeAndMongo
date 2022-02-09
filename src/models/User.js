@@ -17,7 +17,7 @@ UserSchema.methods.encryptPassword = async pasword => {
 };
 
 // Compare user's password with hash password
-// is needed function for use this of the UserSchema (arrow functions don't allow it)
+// is needed "function" for use "this" of the UserSchema (arrow functions don't allow it)
 UserSchema.methods.matchPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 }
