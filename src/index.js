@@ -1,4 +1,5 @@
 //@ts-nocheck
+// Libraries
 import express from "express";
 import { fileURLToPath } from 'url';
 import path, { dirname } from "path";
@@ -6,17 +7,19 @@ import { create } from 'express-handlebars';
 import methodOverride from 'method-override';
 import session from 'express-session';
 import flash from 'connect-flash';
+import passport from "passport";
 //Import routes
 import indexRouter from './routes/index.js';
 import notesRouter from "./routes/notes.js";
 import usersRouter from "./routes/users.js";
-import database from "./database.js";
-
 
 //Initializations
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+//DB
+import configPassport from './config/passport.js';
+import database from "./database.js";
 
 
 //Settings
@@ -51,8 +54,14 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
-// next line use flash for create messages for show states, like success or error
+// Initialize passport (must be after session)
+app.use(passport.initialize());
+// It uses the app.use(session(...)) before created
+app.use(passport.session());
+// next line use flash for create messages for show states, like success or error,
+// it should be after the methods that could use it
 app.use(flash());
+
 
 
 //Global variables
@@ -60,6 +69,7 @@ app.use(flash());
 app.use( (req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next(); 
 });
 

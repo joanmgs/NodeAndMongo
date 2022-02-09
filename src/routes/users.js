@@ -1,6 +1,7 @@
 //@ts-nocheck
 import express from "express";
 import User from "../models/User.js";
+import passport from "passport";
 
 // router let you create the routes for the server
 const router = express.Router();
@@ -8,6 +9,12 @@ const router = express.Router();
 router.get("/users/signin", (req, res) => {
   res.render("users/signin");
 });
+
+router.post("/users/signin", passport.authenticate('local', {
+  successRedirect: '/notes',
+  failureRedirect: '/users/signin',
+  failureFlash: true,
+}));
 
 router.get("/users/signup", (req, res) => {
   res.render("users/signup");

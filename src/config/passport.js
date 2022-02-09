@@ -19,7 +19,7 @@ passport.use(
         // (returnError, userExist, msg) null: there isn't an error
         return done(null, false, { message: "User doesn't exist" }); //callback that finish the authentication process
       } else {
-        const match = await User.matchPassword(password); //validate password
+        const match = await user.matchPassword(password); //validate password
         if (match) {
           return done(null, user); //no error and send finded user
         } else {
@@ -44,3 +44,4 @@ passport.deserializeUser( (id, done) => {
   });
 });
 
+export default null;
