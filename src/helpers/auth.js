@@ -8,3 +8,5 @@ helpers.isAuthenticated = (req, res, next) => {
   req.flash('error_msg', "Not authorized");
   res.redirect('/users/signin');
 };
+
+export default helpers.isAuthenticated;

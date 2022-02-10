@@ -1,10 +1,13 @@
+//@ts-nocheck
 import express from "express";
 import Note from '../models/Note.js';
+// bring authentication middleware
+import isAuthenticated from '../helpers/auth.js';
 
 // router let you create the routes for the server
 const router = express.Router();
 
-router.get("/notes", async (req, res) => {
+router.get("/notes", isAuthenticated, async (req, res) => {
   //the sort command order by creation date, the first ones are the latest created.
   const notes = await Note.find().sort({ date: 'desc'});
   //It's necessary save in a different array for avoid the error: Handlebars: Access has been denied to resolve the property "title" because it is not an "own property" of its parent.
@@ -20,14 +23,14 @@ router.get("/notes", async (req, res) => {
   res.render('notes/all-notes', { myNotes });
 });
 
-router.get('/notes/add', (req, res) => {
+router.get('/notes/add', isAuthenticated, (req, res) => {
   res.render('notes/addnotes');
 });
 
 //addnotes send the data filled in the form here, and then:
 // if are errors it renders addnotes again with the errors, but if not, 
 // it redirect to /notes route (top in this page) that render again notes/all-notes
-router.post('/notes/new-note', async (req, res) => { 
+router.post('/notes/new-note', isAuthenticated, async (req, res) => { 
   const { title, description } = req.body;
   const errors = [];
 
@@ -56,7 +59,7 @@ router.post('/notes/new-note', async (req, res) => {
   };
 });
 
-router.get('/notes/edit/:id', async (req, res) => {
+router.get('/notes/edit/:id', isAuthenticated, async (req, res) => {
   // The id is for search in the DB the note needed for being edited
   const note = await Note.findById(req.params.id);
   const myNote = {
@@ -69,16 +72,16 @@ router.get('/notes/edit/:id', async (req, res) => {
   res.render('notes/edit-notes', { myNote });
 });
 
-router.put('/notes/edit-notes/:id', async (req, res) => {
+router.put('/notes/edit-notes/:id', isAuthenticated, async (req, res) => {
   const { title, description } = req.body;
   await Note.findByIdAndUpdate(req.params.id, { title, description }); //search through an ID and update the data in the DB
   req.flash('success_msg', "You made THE change buddy ;) ");
   res.redirect('/notes');
 });
 
-router.delete('/notes/delete/:id', async (req, res) => {
+router.delete('/notes/delete/:id', isAuthenticated, async (req, res) => {
   await Note.findByIdAndDelete(req.params.id);
-  req.flash('success_msg', "Die note... DIEEEE!!!");
+  req.flash('success_msg', "Die note... DIEEEE!!! ");
   res.redirect('/notes');
 });
 
