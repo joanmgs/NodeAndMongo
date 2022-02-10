@@ -59,4 +59,10 @@ router.post("/users/signup", async (req, res) => {
   }
 });
 
+router.get("/users/logout", (req, res) => {
+  //passport let finish the session
+  req.logOut();
+  res.redirect('/');
+});
+
 export default router;
