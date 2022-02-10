@@ -29,6 +29,8 @@
   {{else}}
     <div class="card mx-auto">
       <div class="card-body">
+        {{!-- use the global variable user created in index.js --}}
+        <h1>Hello {{userPassport.name}}</h1> 
         <p class="lead">You don't have notes yet</p>
         <a href="/notes/add" class="btn btn-success btn-block">Pstt.. you can
           start here

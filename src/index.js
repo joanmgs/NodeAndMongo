@@ -67,9 +67,24 @@ app.use(flash());
 //Global variables
 // this create the messages for show states with flash
 app.use( (req, res, next) => {
+  //create a variable where save the data and not have problems with handlebars
+  let userPassport = null;
+  
+  if(req.user) {
+    userPassport = {
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      password: req.user.password,
+      date: req.user.date,
+      __v: req.user.__v,
+    };
+  };
+
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.userPassport = userPassport || null;  //passport save the user data in this req.user, if not exist null
   next(); 
 });
 

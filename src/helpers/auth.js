@@ -9,4 +9,5 @@ helpers.isAuthenticated = (req, res, next) => {
   res.redirect('/users/signin');
 };
 
+//it will be used in notes.js like a middleware in routes
 export default helpers.isAuthenticated;
