@@ -23,30 +23,33 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-4">
-          <li class="nav-item">
-            <a class="nav-link" href="/users/signin">Sign in</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/signup">Sign up</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Notes
-            </a>
-            <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-              <li><a class="nav-link" href="/notes">All notes</a></li>
-              <li><a class="nav-link" href="/notes/add">Add note</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="nav-link" href="/users/logout">Logout</a></li>
-            </ul>
-          </li>
+          {{#if userPassport}}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Notes
+              </a>
+              <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                <li><a class="nav-link" href="/notes">All notes</a></li>
+                <li><a class="nav-link" href="/notes/add">Add note</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="nav-link" href="/users/logout">Logout</a></li>
+              </ul>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/signin">Sign in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/signup">Sign up</a>
+            </li>
+          {{/if}}
         </ul>
       </div>
     </div>
