@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/notes", isAuthenticated, async (req, res) => {
   //the sort command order by creation date, the first ones are the latest created.
-  const notes = await Note.find().sort({ date: 'desc'});
+  const notes = await Note.find({ user: req.user.id}).sort({ date: 'desc'}); //the find arg is for bring only the notes of the specific user
   //It's necessary save in a different array for avoid the error: Handlebars: Access has been denied to resolve the property "title" because it is not an "own property" of its parent.
   const myNotes = notes.map( item => {
     return {
@@ -53,6 +53,7 @@ router.post('/notes/new-note', isAuthenticated, async (req, res) => {
     });
   } else {// this is the condition where the new note will be saved in the DB
     const newNote = new Note({ title, description }); 
+    newNote.user = req.user.id;
     await newNote.save(); // saved!
     req.flash('success_msg', "Note created!! Yeiiii");
     res.redirect('/notes'); // redirected where all the data are
